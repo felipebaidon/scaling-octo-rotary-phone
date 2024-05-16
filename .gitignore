@@ -1,3 +1,10 @@
-#Compiled files#
-Challenge3/Challenge_3
-Challenge_2/challenge_2
+#ignore all#
+*
+
+#unignore all with extension#
+!*.*
+
+#unignore all directories#
+!*/
+
+# Above combination will ignore all files without extension for the executables#
