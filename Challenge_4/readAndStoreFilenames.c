@@ -7,6 +7,7 @@ int main(int argc, char *argv[])
     DIR *directory;
     struct dirent *file;
     struct stat fstat;
+    FILE *fh;
 
     /* open directory */
     directory = opendir(argv[1]);
@@ -15,19 +16,21 @@ int main(int argc, char *argv[])
         puts("Unable to access directory, try again!");
         return (1);
     }
-
-    printf("%-5s %-20s %-10s %s\n", "Type", "Filename", "Size", "Timestamp");
+    
+    fh = fopen("filelist.txt", "w");   
+    fprintf(fh,"%-5s %-20s %-10s %s\n", "Type", "Filename", "Size", "Timestamp");
     while((file=readdir(directory)) != NULL)
     {
         stat(file->d_name, &fstat);
         if(S_ISDIR(fstat.st_mode))
-            printf( "Dir ");
+            fprintf(fh, "Dir ");
         else
-            printf( "File ");
+            fprintf(fh, "File ");
         
-        printf("%20s %10lld %ld\n", file ->d_name, fstat.st_size, fstat.st_mtime);
+        fprintf(fh,"%20s %10lld %ld\n", file ->d_name, fstat.st_size, fstat.st_mtime);
     }
     
+   fclose(fh);
    closedir(directory);
     
    return 0;
