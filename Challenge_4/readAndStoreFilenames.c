@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <dirent.h>
 #include <sys/stat.h>
+#include <time.h>
 
 int main(int argc, char *argv[])
 {
@@ -27,7 +28,7 @@ int main(int argc, char *argv[])
         else
             fprintf(fh, "File ");
         
-        fprintf(fh,"%20s %10lld %ld\n", file ->d_name, fstat.st_size, fstat.st_mtime);
+        fprintf(fh,"%20s %10lld %s\n", file ->d_name, fstat.st_size, ctime(&fstat.st_mtime));
     }
     
    fclose(fh);
