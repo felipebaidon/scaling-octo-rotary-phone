@@ -9,52 +9,59 @@
 int main(void)
 {
     /* numbers initialization */
-    int  i;
-    int tickets[NUMBER_OF_TICKETS], pickedBalls[WINNING_NUMBERS], ballDrawn[NUMBER_OF_TICKETS];
+    int  i, temp;
+    int  pickedBalls[WINNING_NUMBERS], isBallDrawn[NUMBER_OF_TICKETS];
 
     time_t timeNow;
 
     srand((unsigned)time(&timeNow));    
-    memset(&ballDrawn[0], 0, sizeof(int) * NUMBER_OF_TICKETS);
+    memset(&isBallDrawn[0], 0, sizeof(int) * NUMBER_OF_TICKETS);
 
-    /* fill in participants in array */
-    for(i = 0; i < NUMBER_OF_TICKETS ; i++)
-    {
-        tickets[i] = i + 1; 
-    }
-
-   /* Print participants */
-   for(i = 0; i < NUMBER_OF_TICKETS ; i++)
-   {
-       printf("%d\n", tickets[i]);
-   
-   }
-  
 /* draw numbers */
-    puts(" Here are your numbers!");
 
     for(i = 0; i <  WINNING_NUMBERS ; i++)
    {
-        pickedBalls[i] = rand() % NUMBER_OF_TICKETS;
+        pickedBalls[i] = rand() % NUMBER_OF_TICKETS + 1;
       
         while(1)
        {
-            if(ballDrawn[pickedBalls[i]])
+            if(isBallDrawn[pickedBalls[i]])
             {
-                pickedBalls[i] = rand() % NUMBER_OF_TICKETS;
+                pickedBalls[i] = rand() % NUMBER_OF_TICKETS + 1;
             }
             else
             {
-                ballDrawn[pickedBalls[i]] = 1;
+                isBallDrawn[pickedBalls[i]] = 1;
                 break;
             }
         }
-
-        printf( "%d ",tickets[pickedBalls[i]]);
-
    }
 
-    puts("\n");
+    putchar('\n');
+
+/* sort numbers */
+    puts(" Here are your numbers!");
+    for(i= 0; i < WINNING_NUMBERS - 1 ; i++)
+    {
+        for(int j = i + 1; j < WINNING_NUMBERS; j++)
+        {
+            if(pickedBalls[i] > pickedBalls[j])
+            {
+                temp = pickedBalls[i];
+                pickedBalls[i] = pickedBalls[j];
+                pickedBalls[j] = temp;
+            }
+         }
+     }
+
+
+/* Display results */
+    for(i = 0; i < WINNING_NUMBERS; i ++)
+    {
+        printf("%d ", pickedBalls[i]);
+    }
+
+    putchar('\n');
 
     return 0;
 }
